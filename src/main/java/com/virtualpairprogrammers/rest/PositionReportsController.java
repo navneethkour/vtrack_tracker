@@ -46,4 +46,32 @@ public class PositionReportsController
 		}
 	}
 	
+	@RequestMapping(method=RequestMethod.GET,value="/vehicles1/{vehicleName}")
+	public ResponseEntity<Position> getLatestReportForVehicle1(@PathVariable String vehicleName)
+	{
+		
+		// this code was created to mimic position tracker failures
+		/*try {
+			Thread.sleep(500);
+		} catch (Exception e) {
+			
+		}
+		
+		// here i am trying to create a situation when this method fails 75% times when called
+		if(Math.random() < 0.65) {
+			throw new RuntimeException("Problem with getting LatestReportForVehicle");
+		}*/
+		
+		
+		try 
+		{
+			Position position = data.getLatestPositionFor(vehicleName);
+			return new ResponseEntity<Position>(position, HttpStatus.OK);
+		} 
+		catch (VehicleNotFoundException e) 
+		{
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 }
